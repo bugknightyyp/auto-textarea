@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>auto-textarea test</title>
+		<style>
+		  *{
+			  padding: 0;
+				margin: 0;
+			}
+			#auto-textarea{
+			  font-size: 12px;
+			  border: 1px solid #ccc;
+				height: 20px;
+				line-height: 20px;
+				width: 200px;
+		    margin: 20px;
+				font-size: 14px;
+			}
+			#auto-textarea .tips{
+			  display: inline-block;
+				background: none;
+				color: #777;
+			  border: 0 none;
+			}
+		</style>
+</head>
+<body>
+
+<div id="auto-textarea" contenteditable title="123">
+  <span  contenteditable="false" class="tips" onclick="return false;">回复老总:</span>&nbsp;
+</div>
+
+<script type="text/javascript" src="http://res.bequ.com/js/common/seajs/2.3.0/sea.js"></script>
+<script>
+seajs.config({
+  base: 'http://res.bequ.com/js/common/'
+})
+seajs.use(['jquery/1.11.1/jquery.cmd.min', '../src/auto-textarea'], function($){
+  $("#auto-textarea").autoTextarea({
+            maxHeight:60,
+            minHeight:20
+         })
+				 
+				function po_Last_Div(obj) {
+        if (window.getSelection) {//ie11 10 9 ff safari
+            obj.focus(); //解决ff不获取焦点无法定位问题
+            var range = window.getSelection();//创建range
+
+            range.selectAllChildren(obj);//range 选择obj下所有子内容
+            //range.collapseToEnd();//光标移至最后
+						//range.collapse($("#auto-textarea")[0], 1)
+						debugger;
+					  
+						
+						range.collapse($("#auto-textarea")[0], 6);
+						//sel.collapseToEnd();
+
+        }
+        else if (document.selection) {//ie10 9 8 7 6 5
+            var range = document.selection.createRange();//创建选择对象
+            range.moveToElementText(obj);//range定位到obj
+            range.collapse(false);//光标移至最后
+            range.select();
+        }
+    };
+
+		
+				 po_Last_Div($("#auto-textarea")[0]);
+});
+</script>
+
+</body>
+</html>
